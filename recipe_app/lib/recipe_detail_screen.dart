@@ -1,6 +1,11 @@
+import 'dart:io';
+import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:recipe_app/recipe_model.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:uuid/uuid.dart';
 
 class RecipeDetailScreen extends StatefulWidget {
   final String appBarTitle;
@@ -20,6 +25,8 @@ class RecipeDetailScreenState extends State<RecipeDetailScreen> {
   RecipeModel recipe;
   TextEditingController titleController = TextEditingController();
   TextEditingController instructionController = TextEditingController();
+  File _image;
+  final picker = ImagePicker();
 
   RecipeDetailScreenState(this.recipe, this.appBarTitle);
 
@@ -41,7 +48,7 @@ class RecipeDetailScreenState extends State<RecipeDetailScreen> {
             children: <Widget>[
               Container(
                 padding: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
-                child: Image.network(recipe.image),
+                child: _image != null ? Image.file(_image) : Image.network(recipe.image),
               ),
               Padding(
                 padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
@@ -73,6 +80,15 @@ class RecipeDetailScreenState extends State<RecipeDetailScreen> {
                   ),
                 ),
               ),
+              ElevatedButton(
+                child: Text(
+                  "Add Image",
+                  textScaleFactor: 1.5,
+                ),
+                onPressed: () {
+                  _getImage();
+                },
+              ),
               Padding(
                 padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
                 child: Row(
@@ -85,7 +101,7 @@ class RecipeDetailScreenState extends State<RecipeDetailScreen> {
                         ),
                         onPressed: () {
                           setState(() {
-                            if (formKey.currentState.validate()) _save();
+                            if (formKey.currentState.validate()) _save(titleController.text.toString(), instructionController.text.toString());
                           });
                         },
                       ),
@@ -120,22 +136,40 @@ class RecipeDetailScreenState extends State<RecipeDetailScreen> {
     Navigator.pop(context, true);
   }
 
-  void _save() async {
+  void _save(String title, String instruction) async {
     if (appBarTitle == "Add Recipe") {
-      await _handleAddRecipe();
+      await _handleAddRecipe(title, instruction);
     } else if (appBarTitle == "Edit Recipe") {
       await _handleRecipeRecipe();
     }
     Navigator.pop(context, true);
   }
 
-  Future<void> _handleAddRecipe() async {
+  Future<void> _handleAddRecipe(String title, String instruction) async {
+    String url;
+    if (_image != null) {
+      url = await _handleUploadImage();
+      print("url: $url");
+    }
     final recipeRef = FirebaseFirestore.instance.collection('recipe-list');
     await recipeRef.add(RecipeModel(
-        title: titleController.text.toString(),
-        instruction: instructionController.text.toString(),
-        image: ""
+      title: title,
+      instruction: instruction,
+      image: _image != null ? url : "",
     ).toJson());
+    print("done add");
+  }
+
+  Future<String> _handleUploadImage() async {
+    try {
+      var uuid = Uuid();
+      firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
+          .ref('images/${uuid.v1()}.png');
+      await ref.putFile(_image);
+      return (await ref.getDownloadURL()).toString();
+    } on FirebaseException catch (e) {
+      // e.g, e.code == 'canceled'
+    }
   }
 
   Future<void> _handleRecipeRecipe() async {
@@ -157,8 +191,14 @@ class RecipeDetailScreenState extends State<RecipeDetailScreen> {
     Navigator.pop(context, true);
   }
 
-  void _showAlertDialog(String title, String message) {
-    AlertDialog alertDialog = AlertDialog(title: Text(title), content: Text(message));
-    showDialog(context: context, builder: (_) => alertDialog);
+  Future _getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
   }
 }
