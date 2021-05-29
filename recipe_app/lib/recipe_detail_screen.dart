@@ -39,6 +39,10 @@ class RecipeDetailScreenState extends State<RecipeDetailScreen> {
           padding: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
           child: ListView(
             children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
+                child: Image.network(recipe.image),
+              ),
               Padding(
                 padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
                 child: TextFormField(

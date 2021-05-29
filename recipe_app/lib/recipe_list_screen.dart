@@ -110,7 +110,7 @@ class RecipeListScreenState extends State<RecipeListScreen> {
     this.recipeList.add(RecipeModel(
       title: "Title 1",
       instruction: "Instruction 1",
-      image: "Image 1",
+      image: "https://i.stack.imgur.com/y9DpT.jpg",
     ));
     this.recipeList.add(RecipeModel(
       title: "Title 2",
