@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/login_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,7 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Recipe App",
       debugShowCheckedModeBanner: false,
-      home: Text("hello world"),
+      home: Login(),
     );
   }
 }
