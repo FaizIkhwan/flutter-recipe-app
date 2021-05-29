@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/recipe_detail_screen.dart';
 import 'package:recipe_app/recipe_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RecipeListScreen extends StatefulWidget {
   @override
@@ -87,21 +88,24 @@ class RecipeListScreenState extends State<RecipeListScreen> {
   }
 
   void updateListView() {
-    this.recipeList.add(RecipeModel(
-      title: "Title 1",
-      instruction: "Instruction 1",
-      image: "https://i.stack.imgur.com/y9DpT.jpg",
-    ));
-    this.recipeList.add(RecipeModel(
-      title: "Title 2",
-      instruction: "Instruction 2",
-      image: "Image 2",
-    ));
-    this.recipeList.add(RecipeModel(
-      title: "Title 3",
-      instruction: "Instruction 3",
-      image: "Image 3",
-    ));
-    this.count = recipeList.length;
+    FirebaseFirestore.instance
+        .collection('recipe-list')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        if (this.recipeList.where((element) => element.id == doc.id).isEmpty) {
+          setState(() {
+            this.recipeList.add(RecipeModel(
+              id: doc.id,
+              title: doc['title'],
+              instruction: doc['instruction'],
+              image: doc['image'],
+            ));
+            this.count = recipeList.length;
+          });
+        }
+        print("recipeList: $recipeList");
+      });
+    });
   }
 }
