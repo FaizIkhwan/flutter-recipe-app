@@ -41,10 +41,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                       TextFormField(
                         controller: emailController,
-                        validator: (String text) {
-                          if(text.isEmpty)
-                            return "Email cannot be empty";
-                        },
+                        validator: (text) => text.isEmpty ? "Email cannot be empty" : null,
                         decoration: InputDecoration(
                           labelText: "Email",
                         ),
@@ -53,10 +50,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       TextFormField(
                         controller: passwordController,
                         obscureText: true, // password
-                        validator: (String text) {
-                          if(text.isEmpty)
-                            return "Password cannot be empty";
-                        },
+                        validator: (text) => text.isEmpty ? "Password cannot be empty" : null,
                         decoration: InputDecoration(
                           labelText: "Password",
                         ),
@@ -65,10 +59,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       TextFormField(
                         controller: confirmPasswordController,
                         obscureText: true, // password
-                        validator: (String text) {
-                          if(text.isEmpty)
-                            return "Password cannot be empty";
-                        },
+                        validator: (text) => text.isEmpty ? "Password cannot be empty" : null,
                         decoration: InputDecoration(
                           labelText: "Confirm password",
                         ),

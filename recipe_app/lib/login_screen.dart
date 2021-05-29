@@ -39,9 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: <Widget>[
                     TextFormField(
                       controller: emailController,
-                      validator: (String text) {
-                        if (text.isEmpty) return "Email cannot be empty";
-                      },
+                      validator: (text) => text.isEmpty ? "Email cannot be empty" : null,
                       decoration: InputDecoration(
                         labelText: "Email",
                       ),
@@ -50,9 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     TextFormField(
                       controller: passwordController,
                       obscureText: true, // password
-                      validator: (String text) {
-                        if (text.isEmpty) return "Password cannot be empty";
-                      },
+                      validator: (text) => text.isEmpty ? "Password cannot be empty" : null,
                       decoration: InputDecoration(
                         labelText: "Password",
                       ),
