@@ -121,13 +121,30 @@ class RecipeDetailScreenState extends State<RecipeDetailScreen> {
   }
 
   void _save() async {
+    if (appBarTitle == "Add Recipe") {
+      await _handleAddRecipe();
+    } else if (appBarTitle == "Edit Recipe") {
+      await _handleRecipeRecipe();
+    }
+    Navigator.pop(context, true);
+  }
+
+  Future<void> _handleAddRecipe() async {
     final recipeRef = FirebaseFirestore.instance.collection('recipe-list');
     await recipeRef.add(RecipeModel(
-      title: titleController.text.toString(),
-      instruction: instructionController.text.toString(),
-      image: ""
+        title: titleController.text.toString(),
+        instruction: instructionController.text.toString(),
+        image: ""
     ).toJson());
-    Navigator.pop(context, true);
+  }
+
+  Future<void> _handleRecipeRecipe() async {
+    final recipeRef = FirebaseFirestore.instance.collection('recipe-list');
+    await recipeRef
+        .doc(recipe.id)
+        .update({'title': titleController.text.toString(), 'instruction': instructionController.text.toString(), 'image': ""})
+        .then((value) => print("User Updated"))
+        .catchError((error) => print("Failed to update user: $error"));
   }
 
   void _delete() async {
