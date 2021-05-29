@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/recipe_list_screen.dart';
 import 'dart:async';
 import 'dart:convert';
 
@@ -89,6 +90,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> login(String email, String password) async {
-
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => RecipeListScreen()),
+    );
   }
 }
