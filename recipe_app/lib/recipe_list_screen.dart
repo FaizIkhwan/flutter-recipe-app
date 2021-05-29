@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/recipe_detail_screen.dart';
 import 'dart:async';
 import 'package:recipe_app/recipe_model.dart';
 
@@ -27,7 +28,12 @@ class RecipeListScreenState extends State<RecipeListScreen> {
       body: getNoteListView(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // navigateToNoteDetail(Note("", "", 2), "Add Note");
+          RecipeModel recipe = RecipeModel(
+            title: "",
+            instruction: "",
+            image: "",
+          );
+          navigateToRecipeDetail(recipe, "Add Recipe");
         },
         tooltip: "Add Recipe",
         child: Icon(Icons.add),
@@ -80,12 +86,12 @@ class RecipeListScreenState extends State<RecipeListScreen> {
   }
 
   void navigateToRecipeDetail(RecipeModel recipe, String title) async {
-    // bool result = await Navigator.push(context, MaterialPageRoute(builder: (context) {
-    //   return NoteDetail(note, title);
-    // }));
-    // if (result == true) {
-    //   updateListView();
-    // }
+    bool result = await Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return RecipeDetailScreen(recipe, title);
+    }));
+    if (result == true) {
+      updateListView();
+    }
   }
 
   void updateListView() {
