@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_app/recipe_model.dart';
 
@@ -120,6 +121,12 @@ class RecipeDetailScreenState extends State<RecipeDetailScreen> {
   }
 
   void _save() async {
+    final recipeRef = FirebaseFirestore.instance.collection('recipe-list');
+    await recipeRef.add(RecipeModel(
+      title: titleController.text.toString(),
+      instruction: instructionController.text.toString(),
+      image: ""
+    ).toJson());
     Navigator.pop(context, true);
   }
 
