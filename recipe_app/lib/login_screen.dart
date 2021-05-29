@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:recipe_app/recipe_list_screen.dart';
 import 'dart:async';
 import 'package:recipe_app/register_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -12,6 +13,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   var formKey = GlobalKey<FormState>();
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -88,9 +90,53 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> login(String email, String password) async {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => RecipeListScreen()),
+    try {
+      FirebaseAuth.instance
+          .authStateChanges()
+          .listen((User user) {
+        if (user == null) {
+          print('User is currently signed out!');
+        } else {
+          print('User is signed in!');
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => RecipeListScreen()),
+          );
+        }
+      });
+
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        _showDialog('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        _showDialog('Wrong password provided for that user.');
+      }
+    }
+  }
+
+  void _showDialog(String text) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(text),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text("Close"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        }
     );
   }
 }

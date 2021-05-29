@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "905713326352",
+    "project_id": "crud-flutter-a4e77",
+    "storage_bucket": "crud-flutter-a4e77.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:905713326352:android:7d9cc520d6f80da934ed95",
+        "android_client_info": {
+          "package_name": "com.faizikhwan.recipe_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "905713326352-ppnj09lkkd9h83jgdn5h8vkh4qg6h89a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfLvnX5Tl7kIuzMH7QQtI9C7owMWgQuUo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "905713326352-ppnj09lkkd9h83jgdn5h8vkh4qg6h89a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
