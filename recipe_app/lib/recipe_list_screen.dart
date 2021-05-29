@@ -70,6 +70,15 @@ class RecipeListScreenState extends State<RecipeListScreen> {
   }
 
   void _delete(BuildContext context, RecipeModel recipe) async {
+    CollectionReference recipeRef = FirebaseFirestore.instance.collection('recipe-list');
+    await recipeRef
+        .doc(recipe.id)
+        .delete()
+        .then((value) => print("success delete"))
+        .catchError((error) => print("Failed to delete user: $error"));
+
+    recipeList = List<RecipeModel>();
+    updateListView();
     _showSnackBar(context, "Recipe Deleted Succesfully");
   }
 
@@ -83,11 +92,13 @@ class RecipeListScreenState extends State<RecipeListScreen> {
       return RecipeDetailScreen(recipe, title);
     }));
     if (result == true) {
+      recipeList = List<RecipeModel>();
       updateListView();
     }
   }
 
   void updateListView() {
+    print("updateListView");
     FirebaseFirestore.instance
         .collection('recipe-list')
         .get()

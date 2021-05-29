@@ -131,6 +131,12 @@ class RecipeDetailScreenState extends State<RecipeDetailScreen> {
   }
 
   void _delete() async {
+    CollectionReference recipeRef = FirebaseFirestore.instance.collection('recipe-list');
+    await recipeRef
+        .doc(recipe.id)
+        .delete()
+        .then((value) => print("success delete"))
+        .catchError((error) => print("Failed to delete user: $error"));
     Navigator.pop(context, true);
   }
 
