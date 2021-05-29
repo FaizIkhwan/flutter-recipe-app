@@ -45,7 +45,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         decoration: InputDecoration(
                           labelText: "Email",
                         ),
-                      ), // end TextFormField Username
+                      ),
 
                       TextFormField(
                         controller: passwordController,
@@ -54,7 +54,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         decoration: InputDecoration(
                           labelText: "Password",
                         ),
-                      ), // end TextFormField Password
+                      ),
 
                       TextFormField(
                         controller: confirmPasswordController,
@@ -63,17 +63,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         decoration: InputDecoration(
                           labelText: "Confirm password",
                         ),
-                      ), // end TextFormField Confirm password
+                      ),
 
-                      RaisedButton(
+                      ElevatedButton(
                         child: Text("Register"),
                         onPressed: registerButtonPressed,
-                      ), // end RaisedButton
+                      ),
                     ],
                   ),
-                ), // end form
+                ),
               ],
-            ), // end column
+            ),
           ),
         ),
       ),
@@ -109,7 +109,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               borderRadius: BorderRadius.circular(20.0),
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 child: Text("Close"),
                 onPressed: () {
                   Navigator.of(context).pop();

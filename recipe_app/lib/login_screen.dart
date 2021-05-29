@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/recipe_list_screen.dart';
 import 'dart:async';
-import 'dart:convert';
-
 import 'package:recipe_app/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -44,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       decoration: InputDecoration(
                         labelText: "Email",
                       ),
-                    ), // end TextFormField Username
+                    ),
 
                     TextFormField(
                       controller: passwordController,
@@ -53,9 +51,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       decoration: InputDecoration(
                         labelText: "Password",
                       ),
-                    ), // end TextFormField Password
+                    ),
 
-                    RaisedButton(
+                    ElevatedButton(
                       child: Text("Login"),
                       onPressed: () {
                         if (formKey.currentState.validate()) {
@@ -68,9 +66,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           login(email, password);
                         }
                       },
-                    ), // end RaisedButton
+                    ),
 
-                    RaisedButton(
+                    ElevatedButton(
                       child: Text("Register"),
                       onPressed: () {
                         Navigator.push(
@@ -78,12 +76,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           MaterialPageRoute(builder: (context) => RegisterScreen()),
                         );
                       },
-                    ), // end RaisedButton
+                    ),
                   ],
                 ),
-              ), // end form
+              ),
             ],
-          ), // end column
+          ),
         ),
       ),
     );

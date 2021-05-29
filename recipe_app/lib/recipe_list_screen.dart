@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/recipe_detail_screen.dart';
-import 'dart:async';
 import 'package:recipe_app/recipe_model.dart';
 
 class RecipeListScreen extends StatefulWidget {
@@ -11,7 +10,6 @@ class RecipeListScreen extends StatefulWidget {
 }
 
 class RecipeListScreenState extends State<RecipeListScreen> {
-  // DatabaseHelper databaseHelper = DatabaseHelper();
   List<RecipeModel> recipeList;
   int count = 0;
 
@@ -43,7 +41,6 @@ class RecipeListScreenState extends State<RecipeListScreen> {
 
   ListView getNoteListView() {
     TextStyle titleStyle = Theme.of(context).textTheme.subhead;
-
     return ListView.builder(
       itemCount: count,
       itemBuilder: (BuildContext context, int position) {
@@ -72,12 +69,7 @@ class RecipeListScreenState extends State<RecipeListScreen> {
   }
 
   void _delete(BuildContext context, RecipeModel recipe) async {
-    // int result = await databaseHelper.deleteNote(note.id);
-    // if (result != 0) {
-    //   // successfull delete
-    //   _showSnackBar(context, "Note Deleted Succesfully");
-    //   updateListView();
-    // }
+    _showSnackBar(context, "Recipe Deleted Succesfully");
   }
 
   void _showSnackBar(BuildContext context, String message) {
@@ -95,18 +87,6 @@ class RecipeListScreenState extends State<RecipeListScreen> {
   }
 
   void updateListView() {
-    // final Future<Database> dbFuture = databaseHelper.initializeDatabase();
-    // dbFuture.then((database) {
-    //   Future<List<Note>> noteListFuture = databaseHelper.getNoteList();
-    //   // lepas habis statement atas, baru buat 'then'
-    //   noteListFuture.then((noteList) {
-    //     setState(() {
-    //       this.recipeList = noteList;
-    //       this.count = noteList.length;
-    //     });
-    //   });
-    // });
-
     this.recipeList.add(RecipeModel(
       title: "Title 1",
       instruction: "Instruction 1",

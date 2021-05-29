@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:recipe_app/recipe_model.dart';
 
 class RecipeDetailScreen extends StatefulWidget {
@@ -94,9 +93,7 @@ class RecipeDetailScreenState extends State<RecipeDetailScreen> {
                       width: 5.0,
                     ),
                     Expanded(
-                      child: RaisedButton(
-                        color: Theme.of(context).primaryColorDark,
-                        textColor: Theme.of(context).primaryColorLight,
+                      child: ElevatedButton(
                         child: Text(
                           "Delete",
                           textScaleFactor: 1.5,
@@ -119,7 +116,7 @@ class RecipeDetailScreenState extends State<RecipeDetailScreen> {
   }
 
   void navigateToLastScreen() {
-    Navigator.pop(context, true); // pass true kat navigator notelist
+    Navigator.pop(context, true);
   }
 
   void _save() async {
@@ -131,9 +128,7 @@ class RecipeDetailScreenState extends State<RecipeDetailScreen> {
   }
 
   void _showAlertDialog(String title, String message) {
-    AlertDialog alertDialog =
-        AlertDialog(title: Text(title), content: Text(message));
-
+    AlertDialog alertDialog = AlertDialog(title: Text(title), content: Text(message));
     showDialog(context: context, builder: (_) => alertDialog);
   }
 }
