@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Recipe App",
       debugShowCheckedModeBanner: false,
-      home: Login(),
+      home: LoginScreen(),
     );
   }
 }

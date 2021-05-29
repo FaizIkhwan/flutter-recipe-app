@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
 
-class Login extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
   @override
-  _LoginState createState() => _LoginState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginScreenState extends State<LoginScreen> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   var formKey = GlobalKey<FormState>();
