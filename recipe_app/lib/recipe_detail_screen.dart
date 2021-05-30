@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:recipe_app/recipe_model.dart';
 
 class RecipeDetailScreen extends StatefulWidget {
@@ -19,6 +22,8 @@ class RecipeDetailScreenState extends State<RecipeDetailScreen> {
   RecipeModel recipe;
   TextEditingController titleController = TextEditingController();
   TextEditingController instructionController = TextEditingController();
+  File _image;
+  final picker = ImagePicker();
 
   RecipeDetailScreenState(this.recipe, this.appBarTitle);
 
@@ -40,7 +45,7 @@ class RecipeDetailScreenState extends State<RecipeDetailScreen> {
             children: <Widget>[
               Container(
                 padding: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
-                child: Image.network(recipe.image),
+                child: _image != null ? Image.file(_image) : Image.network(recipe.image),
               ),
               Padding(
                 padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
@@ -71,6 +76,15 @@ class RecipeDetailScreenState extends State<RecipeDetailScreen> {
                     ),
                   ),
                 ),
+              ),
+              ElevatedButton(
+                child: Text(
+                  "Add Image",
+                  textScaleFactor: 1.5,
+                ),
+                onPressed: () {
+                  _getImage();
+                },
               ),
               Padding(
                 padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
@@ -127,8 +141,14 @@ class RecipeDetailScreenState extends State<RecipeDetailScreen> {
     Navigator.pop(context, true);
   }
 
-  void _showAlertDialog(String title, String message) {
-    AlertDialog alertDialog = AlertDialog(title: Text(title), content: Text(message));
-    showDialog(context: context, builder: (_) => alertDialog);
+  Future _getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
   }
 }
