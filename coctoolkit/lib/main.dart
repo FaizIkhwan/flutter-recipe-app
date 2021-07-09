@@ -1,3 +1,4 @@
+import 'package:coctoolkit/ui/views/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:coctoolkit/services/navigation/navigation_service.dart';
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute(builder: (context) => TestScreen());
         }
       },
-      home: TestScreen(),
+      home: SplashScreen(),
     );
   }
 }
