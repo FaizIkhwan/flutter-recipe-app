@@ -19,4 +19,11 @@ class ProjectColourConstant {
   static Color amethystSmokeapprox = Color(0xff978DAF);
   static Color melrose = Color(0xffD1BFFF);
   static Color transparent = Color(0x00000000);
+
+  static Color yellow = Color(0x00FFEF00);
+  static Color amber = Color(0x00FFCD00);
+  static Color orange = Color(0x00FF9A00);
+  static Color deepOrange = Color(0x00FF5500);
+  static Color lightRed = Color(0x00FF9A00);
+  static Color red = Color(0x00D40C00);
 }
